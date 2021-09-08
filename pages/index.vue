@@ -13,16 +13,24 @@
 
 <script>
 import firebase from '~/plugins/firebase'
+
 export default {
   data(){
     return{
       name:null,
       email:null,
       pass:null,
+      userLists:[],
     }
   },
   methods: {
-    register() {
+    async getUser(){
+      const resData = await this.$axios.get(
+        "http://127.0.0.1:8001/api/snsuser"
+      );
+      this.userLists = resData.data.data;
+    },
+    async register() {
       if (!this.name || !this.email || !this.pass) {
         alert('入力されていない項目があります')
         return
@@ -32,7 +40,14 @@ export default {
         .createUserWithEmailAndPassword(this.email, this.pass)
         .then((data) => {
           data.user.sendEmailVerification().then(() => {
-            this.$router.replace('/login')
+            const sendData = {
+            id: data.user.uid,
+            displayName: this.name,
+            };
+            this.$axios.post("http://127.0.0.1:8001/api/snsuser", sendData);
+            this.getUser();
+            alert('新規登録されました')
+            this.$router.replace('/login');
           })
         })
         .catch((error) => {

@@ -5,7 +5,7 @@
         <img src="../実践モダン開発/img/logo.png">
       </div>
       <div class="menu">
-        <a class="home">ホーム</a><br>
+        <a @click="home" class="home">ホーム</a><br>
         <a @click="logout" class="logout">ログアウト</a>
         <div class="share">
         <p>シェア</p>
@@ -16,14 +16,13 @@
   </div>
   <div class="main_right">
     <div class="right">
-      <h2>ホーム</h2>
+      <h2>コメント</h2>
       <ul v-for="item in textLists" :key="item.id">
         <div class="title">
           <p>test</p>
           <img src="../実践モダン開発/img/heart.png" alt="" @click="count++">
           <span>{{ count }}</span>
           <img src="../実践モダン開発/img/cross.png" alt="" @click="deleteText(item.id)">
-          <img class="coment" src="../実践モダン開発/img/detail.png" alt="" @click="move_coment">
         </div>
         <li>{{ item.text }}</li>
       </ul>
@@ -70,7 +69,10 @@ export default {
           })
     },
     move_coment(){
-      this.$router.replace('/coment')
+      this.$router.replace('/login')
+    },
+    home(){
+      this.$router.replace('/home')
     }
   },
   created(){
