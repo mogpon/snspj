@@ -20,7 +20,7 @@
       <ul v-for="item in textLists" :key="item.id">
         <div class="title">
           <p>test</p>
-          <img src="../実践モダン開発/img/heart.png" alt="" @click="count++">
+          <img src="../実践モダン開発/img/heart.png" alt="" @click="goodCount(item.id)">
           <span>{{ count }}</span>
           <img src="../実践モダン開発/img/cross.png" alt="" @click="deleteText(item.id)">
           <img class="coment" src="../実践モダン開発/img/detail.png" alt="" @click="move_coment">
@@ -45,7 +45,7 @@ export default {
   methods: {
     async getText(){
       const resData = await this.$axios.get(
-        "http://127.0.0.1:8000/api/text"
+        "http://127.0.0.1:8001/api/text"
       );
       this.textLists = resData.data.data;
     },
@@ -53,11 +53,11 @@ export default {
       const sendData = {
         text:this.newText,
       };
-      await this.$axios.post("http://127.0.0.1:8000/api/text/",sendData);
+      await this.$axios.post("http://127.0.0.1:8001/api/text/",sendData);
       this.getText();
     },
     async deleteText(id){
-      await this.$axios.delete("http://127.0.0.1:8000/api/text/" + id);
+      await this.$axios.delete("http://127.0.0.1:8001/api/text/" + id);
       this.getText();
     },
     logout() {
@@ -71,7 +71,10 @@ export default {
     },
     move_coment(){
       this.$router.replace('/coment')
-    }
+    },
+    goodCount(id){
+      this.count++;
+    },
   },
   created(){
     this.getText();

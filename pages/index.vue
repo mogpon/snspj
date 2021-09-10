@@ -26,7 +26,7 @@ export default {
   methods: {
     async getUser(){
       const resData = await this.$axios.get(
-        "http://127.0.0.1:8001/api/snsuser"
+        "http://127.0.0.1:8000/api/snsuser"
       );
       this.userLists = resData.data.data;
     },
@@ -44,7 +44,7 @@ export default {
             id: data.user.uid,
             displayName: this.name,
             };
-            this.$axios.post("http://127.0.0.1:8001/api/snsuser", sendData);
+            this.$axios.post("http://127.0.0.1:8000/api/snsuser", sendData);
             this.getUser();
             alert('新規登録されました')
             this.$router.replace('/login');
